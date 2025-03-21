@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheraConnect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eef2ff;
+            text-align: center;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, #5A47A3, #7C78FF);
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a, .login-btn, .signup-btn {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #7a88ff, #a890fe);
+            height: 80vh;
+            color: white;
+        }
+        .hero h2 {
+            font-size: 2.5em;
+        }
+        .hero p {
+            font-size: 1.2em;
+        }
+        .hero button {
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            background-color: #5b6dcd;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .hero button:hover {
+            background-color: #6a7fec;
+        }
+        .relaxation {
+            text-align: center;
+            padding: 40px;
+            background: #e3f2fd;
+        }
+        .audio-player button {
+            background: #5b6dcd;
+            color: white;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+        .audio-player button:hover {
+            background: #6a7fec;
+        }
+        .image-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 50px;
+            background: #dce4ff;
+        }
+        .image-gallery img {
+            width: 280px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            transition: transform 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .image-gallery img:hover {
+            transform: scale(1.1);
+        }
+        .reviews {
+            padding: 50px;
+            background-color: #f1f3ff;
+        }
+        .reviews h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #5A47A3;
+        }
+        .review-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .review {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            max-width: 320px;
+        }
+        .mood-tracker, .chatbot-portal {
+            padding: 50px;
+            background-color: #e8ebff;
+            text-align: center;
+        }
+        .mood-tracker h2, .chatbot-portal h2 {
+            font-size: 2em;
+            color: #5A47A3;
+        }
+        .mood-tracker button, .chatbot-portal button {
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            background-color: #5b6dcd;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        .mood-tracker button:hover, .chatbot-portal button:hover {
+            background-color: #6a7fec;
+        }
+        #faceMoodPopup, #chatPopup, #loginPopup, #signupPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+        #chatPopup .chat-header {
+            background: #5A47A3;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        #chatPopup .chat-body {
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            text-align: left;
+        }
+        #chatPopup .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ccc;
+        }
+        #chatPopup input {
+            flex: 1;
+            padding: 5px;
+            border: none;
+            outline: none;
+        }
+        #chatPopup button {
+            background: #5b6dcd;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .chat-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #5A47A3;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        #loginPopup input, #signupPopup input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #loginPopup button, #signupPopup button {
+            background: #5b6dcd;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup-close {
+            float: right;
+            cursor: pointer;
+        }
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>TheraConnect</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><button class="login-btn" onclick="openPopup('loginPopup')">Sign In</button></li>
+                <li><button class="signup-btn" onclick="openPopup('signupPopup')">Sign Up</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h2>Your AI-Powered Mental Health Companion</h2>
+            <p>24/7 Support, Mood Tracking, and Wellness Tips.</p>
+            <button onclick="openPopup('signupPopup')">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Relaxation Section -->
+    <section class="relaxation">
+        <h2>Relaxation & Guided Meditation</h2>
+        <p>Select a meditation track and relax.</p>
+        <div class="audio-player">
+            <button onclick="playAudio('calm-music.mp3')">Play Calm Music</button>
+            <button onclick="playAudio('guided-meditation.mp3')">Play Guided Meditation</button>
+            <button onclick="pauseAudio()">Pause</button>
+        </div>
+    </section>
+    
+        <audio id="audioPlayer">
+        <source src="" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Image Gallery -->
+    <section class="image-gallery">
+        <img src="boy.png" alt="Therapy Session">
+        <img src="mentalwellness.png" alt="Mental Wellness Tips">
+        <img src="self_care.jpg" alt="Self Care Routine">
+        <img src="Therapy_session.png" alt="Counseling Support">
+    </section>
+
+    <!-- Mood Tracker -->
+    <section class="mood-tracker">
+        <h2>Face Mood Tracker Portal</h2>
+        <p>Track your mood instantly with AI-powered facial recognition.</p>
+        <button onclick="openPopup('faceMoodPopup')">Start Mood Analysis</button>
+    </section>
+
+    <!-- Chatbot Portal -->
+    <section class="chatbot-portal">
+        <h2>Chat with Our AI Support</h2>
+        <p>Need someone to talk to? Chat with our AI chatbot for support and guidance.</p>
+        <button onclick="openPopup('chatPopup')">Start Chat</button>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews">
+        <h2>User Reviews</h2>
+        <div class="review-container" id="reviews"></div>
+    </section>
+
+    <!-- Login Popup -->
+    <div id="loginPopup" class="popup">
+        <span class="popup-close" onclick="closePopup('loginPopup')">×</span>
+        <h3>Login</h3>
+        <form id="loginForm">
+            <input type="email" id="loginEmail" placeholder="Email" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Sign-Up Popup -->
+    <div id="signupPopup" class="popup">
+        <span class="popup-close" onclick="closePopup('signupPopup')">×</span>
+        <h3>Sign Up</h3>
+        <form id="signupForm">
+            <input type="text" id="signupUsername" placeholder="Username" required>
+            <input type="email" id="signupEmail" placeholder="Email" required>
+            <input type="password" id="signupPassword" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+
+    <!-- Chat Popup -->
+    <div id="chatPopup" class="popup">
+        <div class="chat-header">
+            <h3>Thera Bot</h3>
+            <span class="popup-close" onclick="closePopup('chatPopup')">×</span>
+        </div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type your message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Face Mood Popup (Placeholder for Future Implementation) -->
+    <div id="faceMoodPopup" class="popup">
+        <span class="popup-close" onclick="closePopup('faceMoodPopup')">×</span>
+        <h3>Face Mood Analysis</h3>
+        <p>This feature will analyze your mood through facial recognition.</p>
+        <p>currently not available</p>
+    </div>
+
+    <!-- Chat Icon -->
+    <div class="chat-icon" onclick="openPopup('chatPopup')">💬</div>
+
+    <div class="popup-overlay" onclick="closeAllPopups()"></div>
+
+    <script>
+        function openPopup(id) {
+            document.getElementById(id).style.display = 'block';
+            document.querySelector('.popup-overlay').style.display = 'block';
+        }
+        function closePopup(id) {
+            document.getElementById(id).style.display = 'none';
+            document.querySelector('.popup-overlay').style.display = 'none';
+        }
+        
+        function closeAllPopups() {
+            const popups = document.querySelectorAll('.popup');
+            popups.forEach(popup => popup.style.display = 'none');
+            document.querySelector('.popup-overlay').style.display = 'none';
+        }
+
+        // Handle Login Form Submission
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let email = document.getElementById("loginEmail").value;
+            let password = document.getElementById("loginPassword").value;
+
+            // Dummy check (replace with actual authentication)
+            if (email === "test@example.com" && password === "password123") {
+                alert("Login Successful!");
+                closePopup('loginPopup')
+               // window.location.href = "dashboard.html"; // Redirect to Dashboard
+            } else {
+                alert("Invalid credentials. Try again.");
+            }
+        });
+
+        // Handle Sign-Up Form Submission
+        document.getElementById("signupForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let username = document.getElementById("signupUsername").value;
+            let email = document.getElementById("signupEmail").value;
+            let password = document.getElementById("signupPassword").value;
+
+            if (username && email && password) {
+                alert("Account Created Successfully!");
+                closePopup("signupPopup")
+               // window.location.href = "welcome.html"; // Redirect to Welcome Page
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+
+
+        function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            if (!userInput) return;
+
+            const chatBody = document.getElementById('chatBody');
+
+            const userMessage = document.createElement('div');
+            userMessage.innerHTML = <strong>You:</strong> ${userInput};
+            chatBody.appendChild(userMessage);
+
+            document.getElementById('userInput').value = '';
+
+            setTimeout(() => {
+                const botResponse = getBotResponse(userInput);
+                const botMessage = document.createElement('div');
+                botMessage.innerHTML = <strong>Thera Bot:</strong> ${botResponse};
+                chatBody.appendChild(botMessage);
+
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+        }
+        let audio = document.getElementById("audioPlayer");
+
+        function playAudio(file) {
+        audio.src = file;
+        audio.play();
+        }
+
+        function pauseAudio() {
+         audio.pause();
+        }
+        audio.src = "https://example.com/path-to-your-audio.mp3";
