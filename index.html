@@ -87,24 +87,52 @@
             background: #6a7fec;
         }
         .image-gallery {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 50px;
-            background: #dce4ff;
-        }
-        .image-gallery img {
-            width: 280px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 12px;
-            transition: transform 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .image-gallery img:hover {
-            transform: scale(1.1);
-        }
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 50px;
+    background: #dce4ff;
+}
+
+.image-container {
+    position: relative;
+    width: 280px;
+    height: 200px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+.image-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* Hover Effect */
+.image-container:hover img {
+    filter: blur(3px);
+}
+
+.image-container:hover .image-title {
+    opacity: 1;
+}
+
         .reviews {
             padding: 50px;
             background-color: #f1f3ff;
@@ -279,11 +307,24 @@
 
     <!-- Image Gallery -->
     <section class="image-gallery">
-        <img src="boy.png" alt="Therapy Session">
-        <img src="mentalwellness.png" alt="Mental Wellness Tips">
-        <img src="self_care.jpg" alt="Self Care Routine">
-        <img src="Therapy_session.png" alt="Counseling Support">
+        <div class="image-container">
+            <img src="boy.png" alt="Therapy Session">
+            <div class="image-title">Therapy Session</div>
+        </div>
+        <div class="image-container">
+            <img src="mentalwellness.png" alt="Mental Wellness">
+            <div class="image-title">Mental Wellness</div>
+        </div>
+        <div class="image-container">
+            <img src="Screenshot 2025-03-30 at 11.32.22 AM.png" alt="Self Care Routine">
+            <div class="image-title">Self Care Routine</div>
+        </div>
+        <div class="image-container">
+            <img src="Therapy_session.png" alt="Counseling Support">
+            <div class="image-title">Counseling Support</div>
+        </div>
     </section>
+    
 
     <!-- Mood Tracker -->
     <section class="mood-tracker">
@@ -299,12 +340,7 @@
         <button onclick="openPopup('chatPopup')">Start Chat</button>
     </section>
 
-    <!-- Reviews Section -->
-    <section class="reviews">
-        <h2>User Reviews</h2>
-        <div class="review-container" id="reviews"></div>
-    </section>
-
+   
     <!-- Login Popup -->
     <div id="loginPopup" class="popup">
         <span class="popup-close" onclick="closePopup('loginPopup')">×</span>
